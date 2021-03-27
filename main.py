@@ -7,13 +7,24 @@ from replit import db
 from keep_alive import keep_alive
 
 client = discord.Client()
+dUser = discord.User
+
+#client(max_messages(None))
+
+
 
 sad_words = ["sad", "depressed", "unhappy", "angry", "miserable", "depressing"]
 
 starter_encouragements = [
   "Cheer up or whatever",
   "Just fall already",
-  "You are really a pain in the ass"
+  "You are really a pain in the ass",
+  "Drop dead"
+]
+
+bot_names = [
+  "Trix",
+  "trix"
 ]
 
 if "responding" not in db.keys():
@@ -76,10 +87,24 @@ async def on_message(message):
       encouragements = db["encouragements"]
     await message.channel.send(encouragements)
 
-  
   if msg.startswith('tx!hello'):
     await message.channel.send("Hello there!")
+
+  if msg.startswith('hello trix'):
+    await message.channel.send("Hello there!")
+
+  if msg.startswith('hi trix'):
+    await message.channel.send("Hello there!")
+
+  #if msg.startswith('hello ' + word in msg for word in bot_names):
+  #  await message.channel.send("Hello there!")
   
+  if msg.startswith('Hi Trix'):
+    await message.channel.send("Hello there!")
+
+  if msg.startswith('Hello Trix'):
+    await message.channel.send("Hello there!")
+
   if msg.startswith('tx!help'):
     await message.channel.send('This is a test command, my creator is working hard to get me working right!')
 
@@ -88,16 +113,13 @@ async def on_message(message):
     if "encouragements" in db.keys():
       encouragements = db["encouragements"]
     await message.channel.send(encouragements)
-  
-  if msg.startswith("responding"):
-    value = msg.split("tx!responding ",1)[1]
 
-    if value.lower() == "true":
-      db["responding"] = True
-      await message.channel.send("responding is on")
-    else:
-      db["responding"] = False
-      await message.channel.send("responding is off")
+  if msg.startswith('test'):
+    await message.channel.send('We have logged in as {.avatar}'.format(dUser))
+  
+  if msg.startswith("Dm me"):
+    await client.send_message(discord.Member, 'hello!')
+
 
 keep_alive()
 client.run(os.getenv('TOKEN'))
